@@ -21,7 +21,7 @@ class Client(Base):
     cpf = Column(Integer, nullable=False, unique=True)
     address = Column(String, nullable=False)
 
-    account = relationship("Account", back_populates="client")
+    account = relationship("Account", back_populates="client", uselist=False)
 
 class Account(Base):
     __tablename__ = "account"
@@ -32,7 +32,8 @@ class Account(Base):
     user_id = Column(Integer, ForeignKey("customer_account.id"), nullable=False)
     client = relationship("Client", back_populates="account")
 
-engine = create_engine("sqlite://")
+
+engine = create_engine("sqlite:///:memory")
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
