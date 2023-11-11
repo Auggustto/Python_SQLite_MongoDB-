@@ -31,18 +31,45 @@ def read_all_users():
     if read != "Error in select all users!":
 
         for client, account in read:
-            print("-" * 20)
             print(f" Name: {client.name} \n CPF: {client.cpf} \n Address: {client.address} \n Account: {account.type_account} \n Agency: {account.agency} \n Number accont: {account.num_accont}")
-            print("-" * 20)
     else:
         print("Error client not exist or deleted")
 
 
 def read_user(cpf):
 
-    user, account = model.created_user.read_user(cpf)
+    try:
+        user = model.created_user.read_user(cpf)
+        
+        if user:
+                user_info = {
+                    "id": user.id,
+                    "name": user.name,
+                    "cpf": user.cpf,
+                    "address": user.address,
+                }
 
-    return f" Id: {user.id} \n Name: {user.name} \n CPF: {user.cpf} \n Address: {user.address} \n Account: {account.type_account} \n Agency: {account.agency}"
+                accounts_info = []
+
+                for account in user.accounts:
+                    account_info = {
+                        "id": account.id,
+                        "type_account": account.type_account,
+                        "agency": account.agency,
+                        "num_accont": account.num_accont,
+                    }
+                    accounts_info.append(account_info)
+
+                user_info["accounts"] = accounts_info
+
+                return f" ID: {user_info['id']} \n Name: {user_info['name']} \n CPF: {user_info['cpf']} \n Address: {user_info['address']} \n Type accounts: {user_info['accounts'][0]['type_account']} \n Agency: {user_info['accounts'][0]['agency']} \n Number account: {user_info['accounts'][0]['num_accont']}"
+                
+
+        else:
+            return f"User not found with CPF: {cpf}"
+
+    except Exception as e:
+        return f"Error in reading user and accounts: {e}"
     
 
 
@@ -51,7 +78,7 @@ def delete_user():
     cpf_user = int(input("Insert CPF: \n"))
     delete = model.created_user.delete_user(cpf_user)
 
-    return delete
+    print(delete)
 
 
 def update_client():
@@ -65,12 +92,12 @@ def update_client():
         print("_"*30)
 
         address = input("Insert address: \n")
-        type_account = input("Input type account \n By default the account type is basic, if this is the case you don't need to enter: \n")
+        type_account = input("Input type account \n")
 
         if type_account == '':
             type_account = None
 
-        model.created_user.edit_user(cpf_edit, address, type_account)
-        return "Update sucessfully"
+        update = model.created_user.edit_user(cpf_edit, address, type_account)
+        return update
     else:
         return f"User not found check the CPF entered: {cpf_edit}"

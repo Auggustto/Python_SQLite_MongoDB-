@@ -22,7 +22,7 @@ class Client(Base):
     cpf = Column(Integer, nullable=False, unique=True)
     address = Column(String, nullable=False, unique=True)
 
-    account = relationship("Account", back_populates="client", cascade='all, delete-orphan')
+    accounts = relationship("Account", back_populates="client", cascade='all, delete-orphan')
 
 class Account(Base):
     __tablename__ = "account"
@@ -32,7 +32,7 @@ class Account(Base):
     num_accont = Column(Integer, unique=True)
 
     user_id = Column(Integer, ForeignKey("customer_account.id"), nullable=False)
-    client = relationship("Client", back_populates="account")
+    client = relationship("Client", back_populates="accounts")
 
 
 engine = create_engine("sqlite:///:memory")

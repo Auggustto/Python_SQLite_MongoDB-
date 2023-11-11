@@ -17,7 +17,7 @@ class created_user:
         new_account = db_sqlalchemy.Account(type_account=self.type_account, agency=self.agency, num_accont = self.num_accont)
 
         ### Relation of client and account ###
-        new_client.account.append(new_account)
+        new_client.accounts.append(new_account)
 
         try:
             db_sqlalchemy.session.add(new_client)
@@ -40,7 +40,8 @@ class created_user:
     
     def read_user(cpf_user):
         # statements = session.query(Client).filter_by(cpf=cpf_user).first()
-        statements = db_sqlalchemy.session.query(db_sqlalchemy.Client, db_sqlalchemy.Account).join(db_sqlalchemy.Account).filter(db_sqlalchemy.Client.cpf == cpf_user).first()
+        # statements = db_sqlalchemy.session.query(db_sqlalchemy.Client).join(db_sqlalchemy.Client.accounts).filter(db_sqlalchemy.Client.cpf == cpf_user).first()
+        statements = db_sqlalchemy.session.query(db_sqlalchemy.Client).filter_by(cpf=cpf_user).first()
         
         return statements
     
@@ -57,17 +58,13 @@ class created_user:
 
         try:
             edit = db_sqlalchemy.session.query(db_sqlalchemy.Client).filter_by(cpf=cpf_edit).first()
+            print("Edit", edit.address)
 
             if edit:
                 edit.address = address
 
-                # Search for the account associated with this customer
-                account_to_edit = next((accont for accont in edit.account if accont.type_account == type_account), None)
-                
-                if account_to_edit:
-
-                    # Edit account details
-                    edit.type_account = type_account
+                for account in edit.accounts:
+                    account.type_account = type_account
 
                     db_sqlalchemy.session.commit()
 

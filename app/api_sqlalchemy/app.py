@@ -9,6 +9,7 @@ select_function = {
     "4":controller.read_all_users,
 }
 
+
 if select_options != "5":
     print("_" * 40)
     select_f = select_function[select_options]()
