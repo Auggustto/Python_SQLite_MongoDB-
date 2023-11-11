@@ -2,6 +2,21 @@ from models import model
 
 
 def create_new_user():
+    """
+    This function prompts the user to input information for creating a new user.
+    It then creates a new user and inserts it into the database.
+
+    User Input:
+    - name (str): Full name of the user.
+    - cpf (int): CPF (Brazilian ID) of the user.
+    - address (str): Address of the user.
+    - type_account (str): Type of account (default: 'basic').
+    - agency (str): Agency where the account is held (selected from available options).
+    - num_accont (int): Account number.
+
+    Returns:
+    - str: Success message or error if user creation fails.
+    """
     
     name = str(input("Input full name: \n"))
     cpf = int(input("Input CPF: \n"))
@@ -26,6 +41,12 @@ def create_new_user():
 
 
 def read_all_users():
+    """
+    This function retrieves information for all users and their associated accounts from the database.
+
+    Returns:
+    - None: Prints user and account information for all users.
+    """
     read = model.created_user.read_all()
 
     if read != "Error in select all users!":
@@ -37,6 +58,15 @@ def read_all_users():
 
 
 def read_user(cpf):
+    """
+    This function retrieves information for a specific user and their associated accounts based on CPF.
+
+    Parameters:
+    - cpf (int): CPF of the user to retrieve.
+
+    Returns:
+    - str: User and account information or an error message if the user is not found.
+    """
 
     try:
         user = model.created_user.read_user(cpf)
@@ -74,6 +104,12 @@ def read_user(cpf):
 
 
 def delete_user():
+    """
+    This function prompts the user to input a CPF and deletes the corresponding user and their accounts from the database.
+
+    Returns:
+    - str: Success message or error if deletion fails.
+    """
 
     cpf_user = int(input("Insert CPF: \n"))
     delete = model.created_user.delete_user(cpf_user)
@@ -82,6 +118,13 @@ def delete_user():
 
 
 def update_client():
+    """
+    This function prompts the user to input a CPF, displays the existing user information,
+    and allows the user to update the address and type of account for the user.
+
+    Returns:
+    - str: Success message or error if update fails.
+    """
     
     cpf_edit = int(input("Insert CPF for search: \n"))
 
