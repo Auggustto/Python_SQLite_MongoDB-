@@ -7,7 +7,7 @@ def create_new_user():
     address = str(input("Input address: \n"))
     type_account = str(input("Input type account \n By default the account type is basic, if this is the case you don't need to enter: \n"))
     agency = str(input("Input agency: \n 1 Santander \n 2 Bradesco \n 3 Banco do Brasil \n 4 Caixa \n"))
-    num_accont = int(input("Input number acccount: \n"))
+    num_account = int(input("Input number acccount: \n"))
 
     if type_account == "":
         type_account = "Basic"
@@ -19,8 +19,15 @@ def create_new_user():
         "4": "Caixa",
     }
 
-    create = models.create_user(name=name, cpf=cpf, address=address,type_account=type_account, agency=select_agency[agency], num_accont=num_accont)
+    create = models.create_user(name=name, cpf=cpf, address=address,type_account=type_account, agency=select_agency[agency], num_account=num_account)
+    result = create.create()
 
-    return create
+    print(result)
+
+def read_user():
+
+    user = models.create_user.read_user()
+    print(user)
+
 
 
