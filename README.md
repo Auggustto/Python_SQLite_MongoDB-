@@ -28,3 +28,7 @@ Perform the operations:
  - Insert documents with the structure mentioned
  - Write information retrieval instructions based on key and value
  pairs as you did in class.
+
+---
+link to the database schema:
+https://dbdesigner.page.link/pv6o5mXB7EMEcux36
