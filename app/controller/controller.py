@@ -116,14 +116,5 @@ def read_all_users():
         print("_"*20, "Account details","_"*20)
         print(result)
         print("_"*40)
-        # print('_'*40)
-        # print(f"Id: {user['_id']}")
-        # print(f"Name: {user['name']}")
-        # print(f"CPF: {user['cpf']}")
-        # print(f"Address: {user['address']}")
-        # print(f"Account Type: {user['account']['type']}")
-        # print(f"Agency: {user['account']['agency']}")
-        # print(f"Number Account: {user['account']['number']}")
-        # print(f"Date Register: {user['date_time']}")
-        # print('_'*40)
+
 

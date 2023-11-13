@@ -3,7 +3,22 @@ from datetime import datetime
 
 
 class create_user:
+    """
+    Represents a user and provides methods for creating, reading, updating, and deleting user information in the database.
+    """
+
     def __init__(self, name, cpf, address, type_account, agency, num_account):
+        """
+        Initializes a new user object with the provided information.
+
+        Args:
+            name (str): Full name of the user.
+            cpf (int): CPF (Brazilian individual taxpayer registry) of the user.
+            address (str): Address of the user.
+            type_account (str): Type of the user's account.
+            agency (str): Agency of the user's account.
+            num_account (int): Number of the user's account.
+        """
 
         self.name = name
         self.cpf = cpf
@@ -13,6 +28,12 @@ class create_user:
         self.num_account = num_account
 
     def create(self):
+        """
+        Creates a new user in the database and returns a message indicating success or failure.
+
+        Returns:
+            str: Message indicating whether the user was created successfully or an error occurred.
+        """
     
         post = {
             "name": self.name,
@@ -39,6 +60,15 @@ class create_user:
 
 
     def read_user(cpf):
+        """
+        Reads user information from the database based on the CPF and returns the user's data.
+
+        Args:
+            cpf (int): CPF (Brazilian individual taxpayer registry) of the user.
+
+        Returns:
+            dict or str: User information as a dictionary or an error message if the user is not found.
+        """
 
         user = db_pymongo.collection.find_one({"cpf":cpf})
         # print("Read user", user)
@@ -50,6 +80,15 @@ class create_user:
             return f"Invalid CPF error or user has been deleted."
     
     def delete_user(cpf):
+        """
+        Deletes a user from the database based on the CPF and returns a message indicating success or failure.
+
+        Args:
+            cpf (int): CPF (Brazilian individual taxpayer registry) of the user.
+
+        Returns:
+            str: Message indicating whether the user was deleted successfully or an error occurred.
+        """
         id_user = create_user.read_user(cpf)
 
         if id_user:
@@ -72,6 +111,15 @@ class create_user:
 
 
     def update_client(cpf):
+        """
+        Updates user information in the database based on the CPF and returns a message indicating success or failure.
+
+        Args:
+            cpf (int): CPF (Brazilian individual taxpayer registry) of the user.
+
+        Returns:
+            str: Message indicating whether the user was updated successfully or an error occurred.
+        """
 
         address = input("Insert address: \n")
         type_account = input("Input type account \n")
@@ -100,6 +148,12 @@ class create_user:
             return f"Error in update user -> {e}"
 
     def read_all_users():
+        """
+        Reads all users from the database and returns a cursor with user information.
+
+        Returns:
+            pymongo.cursor.Cursor: Cursor containing user information.
+        """
 
         try:
             all_users = db_pymongo.collection.find()
